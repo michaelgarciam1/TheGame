@@ -98,8 +98,8 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000);
-                // this.viewer.getContador().setText(String.valueOf(this.controller.getModel()));
+                Thread.sleep(10);
+                // this.viewer.repaint();
             } catch (InterruptedException e) {
             }
         }

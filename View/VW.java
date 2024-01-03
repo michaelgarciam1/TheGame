@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import Model.Balls;
 
@@ -40,12 +41,23 @@ public class VW extends JPanel implements Runnable {
         this.add(this.contador, c);
     }
 
+    //aqui esta el error!! CREO
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
-    }
-
+       while (true) {
+              try {
+                Thread.sleep(1000);
+                SwingUtilities.invokeLater(new Runnable() {
+                     @Override
+                     public void run() {
+                          contador.setText(String.valueOf(Integer.parseInt(contador.getText()) + 1));
+                     }
+                });
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
+         }
+}
     public JTextField getContador() {
         return this.contador;
     }
