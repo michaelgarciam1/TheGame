@@ -1,23 +1,20 @@
 package Model;
 
-import javax.swing.Timer;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Balls implements Runnable, VO, ActionListener {
     private int velocity;
     private int acceleration;
-    private int posx,posy,bounds=80;
+    private int posx, posy, bounds = 80;
     private int mass;
     private int radius;
-	private boolean move_up, move_left;
+    private boolean move_up, move_left;
     private int width = 500;
     private int height = 500;
 
-
-    public Balls(int velocity, int acceleration, int posx, int posy, int bounds, int mass, int radius, boolean move_up, boolean move_left) {
+    public Balls(int velocity, int acceleration, int posx, int posy, int bounds, int mass, int radius, boolean move_up,
+            boolean move_left) {
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.posx = posx;
@@ -28,52 +25,72 @@ public class Balls implements Runnable, VO, ActionListener {
         this.move_up = move_up;
         this.move_left = move_left;
     }
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
         move();
-        paint(); 
+        paint();
     }
+
     private void bounce() {
-       new ActionListener() {			
+        new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // horizontal motion logic.
+                // horizontal
                 if (posx > width - bounds) {
                     move_left = true;
                 }
                 if (posx < 0) {
                     move_left = false;
                 }
-                // Performing horizontal motion.
-                    if (move_left) {
-                        posx -= 1;
-                    }
-                    else {
-                        posx += 1;
-                    }
-                // vertical motion logic.
+                if (move_left) {
+                    posx -= 1;
+                } else {
+                    posx += 1;
+                }
+                // vertical
                 if (posy > height - bounds) {
                     move_up = true;
                 }
                 if (posy < 0) {
                     move_up = false;
                 }
-                // Performing vertical motion.
-                    if (move_up) {
-                        posy -= 1;
-                    }
-                    else {
-                        posy += 1;
-                    }
-         
+                if (move_up) {
+                    posy -= 1;
+                } else {
+                    posy += 1;
+                }
+
             }
         };
-      
-        
+
     }
 
-    public int getVelocity() {
+
+
+    @Override
+    public void run() {
+        while (true) {
+            bounce();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void paint() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'paint'");
+    }
+
+    @Override
+    public void move() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'move'");
+    }
+        public int getVelocity() {
         return this.velocity;
     }
 
@@ -151,30 +168,6 @@ public class Balls implements Runnable, VO, ActionListener {
 
     public void setMove_left(boolean move_left) {
         this.move_left = move_left;
-    }
-   
-    @Override
-    public void run() {
-        while (true) {
-            bounce();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-   @Override
-    public void paint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'paint'");
-    }
-
-    @Override
-    public void move() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
 }

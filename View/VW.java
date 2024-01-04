@@ -12,12 +12,11 @@ import javax.swing.SwingUtilities;
 import Model.Balls;
 
 public class VW extends JPanel implements Runnable {
-    JTextField contador;
+
     ArrayList<Balls> balls;
 
     public VW(ArrayList<Balls> balls) {
         this.balls = balls;
-        this.contador = new JTextField("0");
 
         this.setLayout(new GridBagLayout());
         this.addComponentsToPane();
@@ -25,7 +24,7 @@ public class VW extends JPanel implements Runnable {
 
     private void addComponentsToPane() {
         GridBagConstraints c = new GridBagConstraints();
-        JLabel lContador = new JLabel("Contador");
+        JLabel lBalls = new JLabel("Bolas");
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -36,36 +35,32 @@ public class VW extends JPanel implements Runnable {
         c.gridwidth = 1;
 
         c.gridx++;
-        this.add(lContador, c);
+        this.add(lBalls, c);
         c.gridx++;
-        this.add(this.contador, c);
+        this.add(this.balls, c);
     }
 
-    //aqui esta el error!! CREO
+    private void add(ArrayList<Balls> balls2, GridBagConstraints c) {
+    }
+
     @Override
     public void run() {
-       while (true) {
-              try {
-                Thread.sleep(1000);
-                SwingUtilities.invokeLater(new Runnable() {
-                     @Override
-                     public void run() {
-                          contador.setText(String.valueOf(Integer.parseInt(contador.getText()) + 1));
-                     }
-                });
-              } catch (InterruptedException e) {
+        while (true) {
+            // Actualizar la posición de las bolas
+            for (Balls ball : balls) {
+                ball.move();
+            }
+            
+            // Repintar el panel
+            repaint();
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-              }
-         }
-}
-    public JTextField getContador() {
-        return this.contador;
+            }
+        }
     }
-
-    public void setContador(JTextField contador) {
-        this.contador = contador;
-    }
-
 
     public ArrayList<Balls> getBalls() {
         return this.balls;
@@ -74,7 +69,5 @@ public class VW extends JPanel implements Runnable {
     public void setBalls(ArrayList<Balls> balls) {
         this.balls = balls;
     }
-   
-
 
 }

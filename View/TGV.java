@@ -21,13 +21,13 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     ArrayList<Balls> balls;
 
     public TGV(ArrayList<Balls> balls) {
-        this.controlPanel = new CP();
+        this.balls = balls;
+        this.controlPanel = new CP(balls);
         this.viewer = new VW(balls);
         this.controller = new TGCT();
         this.playPause = this.controlPanel.getPlayPause();
         this.playPause.addActionListener(this);
-        this.balls = balls;
-
+    
         this.configureJFrame();
         this.setVisible(true);
 
