@@ -48,6 +48,4 @@ public class CP extends JPanel {
         this.playPause = playPause;
     }
 
-
 }
-

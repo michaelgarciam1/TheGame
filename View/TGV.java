@@ -25,6 +25,7 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         this.controller = controller;
         this.controlPanel = new CP(controller, balls);
         this.viewer = new VW(balls);
+
         this.playPause = this.controlPanel.getPlayPause();
         this.playPause.addActionListener(this);
     
@@ -65,9 +66,8 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     public void actionPerformed(ActionEvent e) {
         String str = e.getActionCommand();
         switch (str) {
-            case "Play-Pause":
+            case "Play/Pause":
                 controller.play();
-    
                 break;
             default:
                 System.err.println("Acción NO tratada: " + e);
@@ -97,6 +97,7 @@ public class TGV extends JFrame implements ActionListener, Runnable {
                 Thread.sleep(10);
                 // this.viewer.repaint();
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

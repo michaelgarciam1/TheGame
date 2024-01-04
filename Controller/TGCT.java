@@ -1,4 +1,4 @@
- package Controller;
+package Controller;
 
 import java.util.ArrayList;
 
@@ -10,20 +10,22 @@ public class TGCT {
     TGV view;
     TGM model;
 
-
     public TGCT() {
         ArrayList<Balls> balls = new ArrayList<Balls>();
-        this.view = new TGV(this,balls);
+        this.view = new TGV(this, balls);
         this.model = new TGM(balls);
     }
-    public void play(){
-        //cuando llamamos a addBall se crea una nueva bola y luego se incia un nuevo hilo para ejecutar esa misma bola
+
+    public void play() {
+        // cuando llamamos a addBall se crea una nueva bola y luego se incia un nuevo
+        // hilo para ejecutar esa misma bola
         this.model.addBall();
     }
+
     public static void main(String[] args) {
         TGCT controller = new TGCT();
-        Thread thread=new Thread(controller.getView());
-        thread.start();    
+        Thread thread = new Thread(controller.getView());
+        thread.start();
     }
 
     public TGV getView() {
@@ -41,5 +43,5 @@ public class TGCT {
     public void setModel(TGM model) {
         this.model = model;
     }
-    
+
 }
