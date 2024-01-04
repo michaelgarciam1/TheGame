@@ -1,6 +1,5 @@
 package View;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
@@ -27,7 +26,6 @@ public class CP extends JPanel {
 
     private void addComponentsToPane() {
         GridBagConstraints c = new GridBagConstraints();
-        JLabel lPlayPause = new JLabel("Empezar a Jugar");
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 30, 0, 4);
@@ -38,8 +36,6 @@ public class CP extends JPanel {
         c.gridheight = 1;
         c.gridwidth = 1;
 
-        this.add(lPlayPause, c);
-        c.gridx++;
         this.add(this.playPause, c);
 
     }

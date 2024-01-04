@@ -49,7 +49,6 @@ public class VW extends JPanel implements Runnable {
             for (Balls ball : balls) {
                 ball.move();
             }
-            
             // Repintar el panel
             repaint();
 

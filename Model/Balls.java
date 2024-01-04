@@ -1,9 +1,11 @@
 package Model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
-public class Balls implements Runnable, VO, ActionListener {
+public class Balls implements Runnable, VO {
     private int velocity;
     private int acceleration;
     private int posx, posy, bounds = 80;
@@ -12,6 +14,7 @@ public class Balls implements Runnable, VO, ActionListener {
     private boolean move_up, move_left;
     private int width = 500;
     private int height = 500;
+    private boolean isRunning = true;
 
     public Balls(int velocity, int acceleration, int posx, int posy, int bounds, int mass, int radius, boolean move_up,
             boolean move_left) {
@@ -26,63 +29,64 @@ public class Balls implements Runnable, VO, ActionListener {
         this.move_left = move_left;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        move();
-        paint();
-    }
 
     private void bounce() {
-        new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // horizontal
-                if (posx > width - bounds) {
-                    move_left = true;
-                }
-                if (posx < 0) {
-                    move_left = false;
-                }
-                if (move_left) {
-                    posx -= 1;
-                } else {
-                    posx += 1;
-                }
-                // vertical
-                if (posy > height - bounds) {
-                    move_up = true;
-                }
-                if (posy < 0) {
-                    move_up = false;
-                }
-                if (move_up) {
-                    posy -= 1;
-                } else {
-                    posy += 1;
-                }
+        // horizontal
+        if (posx > width - bounds) {
+            move_left = true;
+        }
+        if (posx < 0) {
+            move_left = false;
+        }
+        if (move_left) {
+            posx -= 1;
+        } else {
+            posx += 1;
+        }
 
-            }
-        };
+        // vertical
+        if (posy > height - bounds) {
+            move_up = true;
+        }
+        if (posy < 0) {
+            move_up = false;
+        }
+        if (move_up) {
+            posy -= 1;
+        } else {
+            posy += 1;
+        }
 
     }
-
-
 
     @Override
     public void run() {
-        while (true) {
+        while (isRunning) {
             bounce();
             try {
+                synchronized(this){
+                    wait(10);
+                }
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+    }
+    public void stop() {
+        isRunning = false;
+        synchronized (this) {
+            this.notify();  // Notifica al hilo para que salga del wait
+        }
     }
 
     @Override
-    public void paint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'paint'");
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setColor(Color.RED);
+        g2d.fillOval(posx, posy, bounds, bounds);
     }
 
     @Override
@@ -91,8 +95,7 @@ public class Balls implements Runnable, VO, ActionListener {
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
-    
-        public int getVelocity() {
+    public int getVelocity() {
         return this.velocity;
     }
 

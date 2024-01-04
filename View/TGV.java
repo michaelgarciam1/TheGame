@@ -66,12 +66,8 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         String str = e.getActionCommand();
         switch (str) {
             case "Play-Pause":
-                if (this.playPause.isSelected()) {
-                    this.playPause.setText("Pause");
-                } else {
-                    this.playPause.setText("Play");
-                }
                 controller.play();
+    
                 break;
             default:
                 System.err.println("Acción NO tratada: " + e);
