@@ -13,7 +13,7 @@ public class TGCT {
 
     public TGCT() {
         ArrayList<Balls> balls = new ArrayList<Balls>();
-        this.view = new TGV(balls);
+        this.view = new TGV(this,balls);
         this.model = new TGM(balls);
     }
     public void play(){

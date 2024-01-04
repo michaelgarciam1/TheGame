@@ -90,6 +90,8 @@ public class Balls implements Runnable, VO, ActionListener {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
+
+    
         public int getVelocity() {
         return this.velocity;
     }
