@@ -1,36 +1,76 @@
 package Model;
 
-public class Balls implements Runnable {
+import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Balls implements Runnable, VO, ActionListener {
     private int velocity;
     private int acceleration;
-    private int position;
+    private int posx,posy,bounds=80;
     private int mass;
     private int radius;
+	private boolean move_up, move_left;
+    private int width = 500;
+    private int height = 500;
 
-    public Balls(int velocity, int acceleration, int position, int mass, int radius) {
+
+    public Balls(int velocity, int acceleration, int posx, int posy, int bounds, int mass, int radius, boolean move_up, boolean move_left) {
         this.velocity = velocity;
         this.acceleration = acceleration;
-        this.position = position;
+        this.posx = posx;
+        this.posy = posy;
+        this.bounds = bounds;
         this.mass = mass;
         this.radius = radius;
+        this.move_up = move_up;
+        this.move_left = move_left;
     }
+    
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        move();
+        paint(); 
+    }
     private void bounce() {
-        int width = 600;
-        int height = 800;
-        velocity += acceleration;
-        position += velocity;
-
-        // Si la bola toca el lado izquierdo o derecho, invertir la velocidad
-        if (position < 0 || position > width) {
-            velocity = -velocity;
-        }
-        // Si la bola toca el techo o el suelo, invertir la velocidad
-        if (position < 0 || position > height) {
-            velocity = -velocity;
-        }
-        // Actualizar la interfaz gráfica con la nueva posición de la bola
-
+       new ActionListener() {			
+            public void actionPerformed(ActionEvent e) {
+                // horizontal motion logic.
+                if (posx > width - bounds) {
+                    move_left = true;
+                }
+                if (posx < 0) {
+                    move_left = false;
+                }
+                // Performing horizontal motion.
+                    if (move_left) {
+                        posx -= 1;
+                    }
+                    else {
+                        posx += 1;
+                    }
+                // vertical motion logic.
+                if (posy > height - bounds) {
+                    move_up = true;
+                }
+                if (posy < 0) {
+                    move_up = false;
+                }
+                // Performing vertical motion.
+                    if (move_up) {
+                        posy -= 1;
+                    }
+                    else {
+                        posy += 1;
+                    }
+         
+            }
+        };
+      
+        
     }
 
     public int getVelocity() {
@@ -49,12 +89,28 @@ public class Balls implements Runnable {
         this.acceleration = acceleration;
     }
 
-    public int getPosition() {
-        return this.position;
+    public int getPosx() {
+        return this.posx;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setPosx(int posx) {
+        this.posx = posx;
+    }
+
+    public int getPosy() {
+        return this.posy;
+    }
+
+    public void setPosy(int posy) {
+        this.posy = posy;
+    }
+
+    public int getBounds() {
+        return this.bounds;
+    }
+
+    public void setBounds(int bounds) {
+        this.bounds = bounds;
     }
 
     public int getMass() {
@@ -73,6 +129,30 @@ public class Balls implements Runnable {
         this.radius = radius;
     }
 
+    public boolean isMove_up() {
+        return this.move_up;
+    }
+
+    public boolean getMove_up() {
+        return this.move_up;
+    }
+
+    public void setMove_up(boolean move_up) {
+        this.move_up = move_up;
+    }
+
+    public boolean isMove_left() {
+        return this.move_left;
+    }
+
+    public boolean getMove_left() {
+        return this.move_left;
+    }
+
+    public void setMove_left(boolean move_left) {
+        this.move_left = move_left;
+    }
+   
     @Override
     public void run() {
         while (true) {
@@ -83,6 +163,18 @@ public class Balls implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+   @Override
+    public void paint() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'paint'");
+    }
+
+    @Override
+    public void move() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
 }
