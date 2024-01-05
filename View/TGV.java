@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +11,7 @@ import javax.swing.JToggleButton;
 import Controller.TGCT;
 
 
-public class TGV extends JFrame implements ActionListener, Runnable {
+public class TGV extends JFrame implements ActionListener {
     CP controlPanel;
     JToggleButton playPause;
     VW viewer;
@@ -34,10 +35,12 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     }
 
     private void configureJFrame() {
-        this.setLayout(new GridBagLayout());
+        // this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 800);
-        this.addComponentsToPane(this.getContentPane());
+        this.setSize(500, 500);
+        this.setBackground(Color.blue);
+        this.add(viewer);
+        // this.addComponentsToPane(this.getContentPane());
     }
 
     private void addComponentsToPane(Container panel) {
@@ -48,12 +51,12 @@ public class TGV extends JFrame implements ActionListener, Runnable {
 
         c.gridx = 0;
         c.gridy = 0;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.gridheight = 1;
-        c.gridwidth = 1;
+        c.weightx = 0;
+        c.weighty = 0;
+        c.gridheight = 0;
+        c.gridwidth = 0;
 
-        panel.add(controlPanel, c);
+        // panel.add(controlPanel, c);
         c.gridy++;
         c.gridx = 0;
 
@@ -91,15 +94,4 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         this.playPause = playPause;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                this.viewer.repaint();
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

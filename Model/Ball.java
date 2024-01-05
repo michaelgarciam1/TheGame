@@ -7,7 +7,7 @@ import java.awt.RenderingHints;
 
 public class Ball implements Runnable, VO {
     private int vx, vy;
-    private int posx, posy, radius = 80;
+    private int posx, posy, radius ;
     private boolean isRunning = true;
 
     public Ball(int vx, int vy, int posx, int posy, int radius) {
@@ -32,8 +32,9 @@ public class Ball implements Runnable, VO {
     @Override
     public void run() {
         while (isRunning) {
-            move();
             bounce();
+            move();
+           
             try {
                 {
                     Thread.sleep(10);
@@ -51,17 +52,18 @@ public class Ball implements Runnable, VO {
 
     @Override
     public void paint(Graphics g) {
-     
+        // System.out.println("pintando en " + posx + " " + posy+ " " + radius);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.RED);
-        g2d.fillOval(posx - radius, posy - radius, 2 * radius, 2 * radius); // Draw the ball
+        g2d.setColor(Color.black);
+        g2d.fillOval(posx , posy , radius,  radius); // Draw the ball
     }
 
     @Override
     public void move() {
         posx += vx;
         posy += vy;
+        // System.out.println("posx: " + posx + " posy: " + posy);
     }
 
 }

@@ -16,13 +16,12 @@ public class TGCT {
     public void play() {
         // cuando llamamos a addBall se crea una nueva bola y luego se incia un nuevo
         // hilo para ejecutar esa misma bola
-        this.model.addBall();
+        // this.model.addBall();
     }
 
     public static void main(String[] args) {
         TGCT controller = new TGCT();
-        Thread thread = new Thread(controller.getView());
-        thread.start();
+       
     }
 
     public TGV getView() {
