@@ -1,8 +1,5 @@
 package Controller;
 
-import java.util.ArrayList;
-
-import Model.Balls;
 import Model.TGM;
 import View.TGV;
 
@@ -11,9 +8,9 @@ public class TGCT {
     TGM model;
 
     public TGCT() {
-        ArrayList<Balls> balls = new ArrayList<Balls>();
-        this.view = new TGV(this, balls);
-        this.model = new TGM(balls);
+        this.model = new TGM();
+        this.view = new TGV(this);
+        
     }
 
     public void play() {

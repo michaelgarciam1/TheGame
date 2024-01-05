@@ -5,26 +5,21 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
-
 import Controller.TGCT;
-import Model.Balls;
+
 
 public class TGV extends JFrame implements ActionListener, Runnable {
     CP controlPanel;
     JToggleButton playPause;
     VW viewer;
     TGCT controller;
-    ArrayList<Balls> balls;
 
-    public TGV(TGCT controller, ArrayList<Balls> balls) {
-        this.balls = balls;
+    public TGV(TGCT controller) {
         this.controller = controller;
-        this.controlPanel = new CP(controller, balls);
-        this.viewer = new VW(balls);
+        this.controlPanel = new CP();
+        this.viewer = new VW(controller.getModel().getBalls());
 
         this.playPause = this.controlPanel.getPlayPause();
         this.playPause.addActionListener(this);
@@ -94,8 +89,8 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     public void run() {
         while (true) {
             try {
+                this.viewer.repaint();
                 Thread.sleep(10);
-                // this.viewer.repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
