@@ -45,8 +45,8 @@ public class VW extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) offscreenGraphics;
 
         // Dibujamos cada bola de la lista
-        for (Ball bola : balls) {
-            bola.paint(g2d);
+        for (Ball ball : balls) {
+            ball.paint(g2d);
         }
         // Dibujamos la imagen fuera de pantalla en el canvas
         g.drawImage(offscreenImage, 0, 0, this);

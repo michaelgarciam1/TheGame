@@ -38,12 +38,11 @@ public class TGV extends JFrame implements ActionListener {
 
     // Método para configurar la interfaz gráfica
     private void configureJFrame() {
-        this.setLayout(new GridBagLayout());
+        // this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 800);
-        this.setBackground(Color.BLUE);
-        // this.add(viewer);
-        this.addComponentsToPane(this.getContentPane());
+        this.add(viewer);
+        // this.addComponentsToPane(this.getContentPane());
     }
 
     // Método para añadir componentes al panel.

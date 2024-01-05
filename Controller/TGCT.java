@@ -24,7 +24,7 @@ public class TGCT {
     public static void main(String[] args) {
         TGCT controller = new TGCT();
         // Se crean dos bolas y se inicia un hilo para cada una
-        controller.play();
+        // controller.play();
 
         // Thread thread = new Thread(controller.getView());
         // thread.start();

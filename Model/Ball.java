@@ -56,7 +56,7 @@ public class Ball implements Runnable, VO {
         Graphics2D g2d = (Graphics2D) g;
         // Se activa el antialiasing y se pinta la bola con sus características
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.lightGray);
         g2d.fillOval(posx, posy, radius, radius);
     }
 
