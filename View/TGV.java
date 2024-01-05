@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,8 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import Controller.TGCT;
 
-
-public class TGV extends JFrame implements ActionListener, Runnable {
+public class TGV extends JFrame implements ActionListener {
     CP controlPanel;
     JToggleButton playPause;
     VW viewer;
@@ -19,27 +19,34 @@ public class TGV extends JFrame implements ActionListener, Runnable {
 
     public TGV(TGCT controller) {
         this.controller = controller;
+        // Se inicializa la vista con la lista de bolas del modelo
         this.viewer = new VW(controller.getModel().getBalls());
         this.controlPanel = new CP();
-    
+
         this.playPause = this.controlPanel.getPlayPause();
         this.playPause.addActionListener(this);
-    
+
+        // Se configura la interfaz gráfica
         this.configureJFrame();
         this.setVisible(true);
 
+        // inicalización del hilo para la actualización continua de la vista
         this.viewerThread = new Thread(this.viewer);
         this.viewerThread.start();
 
     }
 
+    // Método para configurar la interfaz gráfica
     private void configureJFrame() {
         this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(900, 800);
+        this.setBackground(Color.BLUE);
+        // this.add(viewer);
         this.addComponentsToPane(this.getContentPane());
     }
 
+    // Método para añadir componentes al panel.
     private void addComponentsToPane(Container panel) {
         GridBagConstraints c = new GridBagConstraints();
 
@@ -53,12 +60,13 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         c.gridheight = 1;
         c.gridwidth = 1;
 
+        // Se añade el panel de control al contenedor
         panel.add(controlPanel, c);
         c.gridy++;
         c.gridx = 0;
 
+        // Se añade el panel de visualización al contenedor
         panel.add(viewer, c);
-     
 
     }
 
@@ -66,6 +74,7 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     public void actionPerformed(ActionEvent e) {
         String str = e.getActionCommand();
         switch (str) {
+            // Si se pulsa el botón de play/pause se llama al método play del controlador
             case "Play/Pause":
                 controller.play();
                 break;
@@ -90,15 +99,4 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         this.playPause = playPause;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                this.viewer.repaint();
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class CP extends JPanel {
     ArrayList<Ball> balls;
     JToggleButton playPause;
-  
 
     public CP() {
         this.playPause = new JToggleButton("Play/Pause");

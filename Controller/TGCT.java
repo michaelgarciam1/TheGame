@@ -8,9 +8,11 @@ public class TGCT {
     TGM model;
 
     public TGCT() {
+        // Inicialización del modelo y la vista
         this.model = new TGM();
+        // A la vista se le pasa el controlador para que pueda acceder al modelo
         this.view = new TGV(this);
-        
+
     }
 
     public void play() {
@@ -21,8 +23,11 @@ public class TGCT {
 
     public static void main(String[] args) {
         TGCT controller = new TGCT();
-        Thread thread = new Thread(controller.getView());
-        thread.start();
+        // Se crean dos bolas y se inicia un hilo para cada una
+        controller.play();
+
+        // Thread thread = new Thread(controller.getView());
+        // thread.start();
     }
 
     public TGV getView() {

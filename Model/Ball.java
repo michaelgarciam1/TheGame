@@ -18,6 +18,7 @@ public class Ball implements Runnable, VO {
         this.radius = radius;
     }
 
+    // Método para hacer rebotar la bola en los bordes de la ventana
     private void bounce() {
         // Movimiento horizontal
         if (posx - radius <= 0 || posx + radius >= 500) {
@@ -34,9 +35,8 @@ public class Ball implements Runnable, VO {
         while (isRunning) {
             bounce();
             move();
-            
             try {
-                {
+                {// Se duerme el hilo para que la bola no se mueva tan rápido
                     Thread.sleep(10);
                 }
             } catch (InterruptedException e) {
@@ -52,15 +52,17 @@ public class Ball implements Runnable, VO {
 
     @Override
     public void paint(Graphics g) {
-     System.out.println("llega a paint");
+        // Se crea un objeto Graphics2D para poder dibujar
         Graphics2D g2d = (Graphics2D) g;
+        // Se activa el antialiasing y se pinta la bola con sus características
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.RED);
-        g2d.fillOval(posx - radius, posy - radius, 2 * radius, 2 * radius); // Draw the ball
+        g2d.fillOval(posx, posy, radius, radius);
     }
 
     @Override
     public void move() {
+        // Se actualiza la posición de la bola
         posx += vx;
         posy += vy;
     }
