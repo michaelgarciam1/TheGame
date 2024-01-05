@@ -12,7 +12,7 @@ public class VW extends Canvas implements Runnable{
 
     public VW(ArrayList<Ball> balls) {
         this.balls = balls;
-        Dimension d = new Dimension(500, 500);
+        Dimension d = new Dimension(200, 300);
         this.setPreferredSize(d);
    
 
@@ -39,7 +39,6 @@ public class VW extends Canvas implements Runnable{
     @Override
     public void run() {
         while (true) {
-            System.out.println("si");
             repaint();
             try {
                 Thread.sleep(10);

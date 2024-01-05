@@ -32,8 +32,9 @@ public class Ball implements Runnable, VO {
     @Override
     public void run() {
         while (isRunning) {
-            move();
             bounce();
+            move();
+            
             try {
                 {
                     Thread.sleep(10);
@@ -51,7 +52,7 @@ public class Ball implements Runnable, VO {
 
     @Override
     public void paint(Graphics g) {
-     
+     System.out.println("llega a paint");
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.RED);

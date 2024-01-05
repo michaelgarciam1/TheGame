@@ -11,7 +11,7 @@ public class TGM {
     }
 
     public void addBall() {
-        Ball newBall = new Ball(0, 0, 0, 0, 0);
+        Ball newBall = new Ball(5, 5, 100, 100, 10);
         // el Thread se encarga de generar bolas
         Thread thread = new Thread(newBall);
         thread.start();

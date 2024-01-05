@@ -36,7 +36,7 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     private void configureJFrame() {
         this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 800);
+        this.setSize(900, 800);
         this.addComponentsToPane(this.getContentPane());
     }
 
@@ -58,8 +58,7 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         c.gridx = 0;
 
         panel.add(viewer, c);
-        // panel.validate();
-        // panel.repaint();
+     
 
     }
 
