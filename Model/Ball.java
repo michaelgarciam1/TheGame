@@ -51,10 +51,11 @@ public class Ball implements Runnable, VO {
 
     @Override
     public void paint(Graphics g) {
+     
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setColor(Color.RED);
-        g2d.fillOval(posx, posy, radius, radius);
+        g2d.fillOval(posx - radius, posy - radius, 2 * radius, 2 * radius); // Draw the ball
     }
 
     @Override

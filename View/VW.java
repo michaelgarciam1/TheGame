@@ -6,22 +6,26 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import Model.Ball;
 
-public class VW extends Canvas {
+public class VW extends Canvas implements Runnable{
 
     ArrayList<Ball> balls;
 
     public VW(ArrayList<Ball> balls) {
         this.balls = balls;
-
         Dimension d = new Dimension(500, 500);
         this.setPreferredSize(d);
-    }
+   
 
+    }
+        
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         for (Ball ball : balls) {
+             System.out.println("llega");
             ball.paint(g);
         }
+
     }
 
     public ArrayList<Ball> getBalls() {
@@ -30,6 +34,19 @@ public class VW extends Canvas {
 
     public void setBalls(ArrayList<Ball> balls) {
         this.balls = balls;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            System.out.println("si");
+            repaint();
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

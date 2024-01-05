@@ -15,17 +15,21 @@ public class TGV extends JFrame implements ActionListener, Runnable {
     JToggleButton playPause;
     VW viewer;
     TGCT controller;
+    Thread viewerThread;
 
     public TGV(TGCT controller) {
         this.controller = controller;
-        this.controlPanel = new CP();
         this.viewer = new VW(controller.getModel().getBalls());
-
+        this.controlPanel = new CP();
+    
         this.playPause = this.controlPanel.getPlayPause();
         this.playPause.addActionListener(this);
     
         this.configureJFrame();
         this.setVisible(true);
+
+        this.viewerThread = new Thread(this.viewer);
+        this.viewerThread.start();
 
     }
 
@@ -54,6 +58,8 @@ public class TGV extends JFrame implements ActionListener, Runnable {
         c.gridx = 0;
 
         panel.add(viewer, c);
+        // panel.validate();
+        // panel.repaint();
 
     }
 
