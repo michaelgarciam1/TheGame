@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class TGM {
     ArrayList<Ball> balls;
 
-    public TGM(){
+    public TGM() {
         this.balls = new ArrayList<Ball>();
         addBall();
     }
 
     public void addBall() {
-        Ball newBall = new Ball(100,100,50,10,10);
+        Ball newBall = new Ball(0, 0, 0, 0, 0);
         // el Thread se encarga de generar bolas
         Thread thread = new Thread(newBall);
         thread.start();

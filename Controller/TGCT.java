@@ -1,8 +1,5 @@
 package Controller;
 
-import java.util.ArrayList;
-
-import Model.Ball;
 import Model.TGM;
 import View.TGV;
 

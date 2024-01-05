@@ -2,22 +2,16 @@ package View;
 
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-
-import Controller.TGCT;
 import Model.Ball;
-
 import java.awt.*;
-
 import java.util.ArrayList;
 
 public class CP extends JPanel {
     ArrayList<Ball> balls;
     JToggleButton playPause;
-    TGCT controller;
+  
 
     public CP() {
-        this.balls = balls;
-        this.controller = controller;
         this.playPause = new JToggleButton("Play/Pause");
         this.setLayout(new GridBagLayout());
         addComponentsToPane();
