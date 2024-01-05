@@ -4,18 +4,18 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import Controller.TGCT;
-import Model.Balls;
+import Model.Ball;
 
 import java.awt.*;
 
 import java.util.ArrayList;
 
 public class CP extends JPanel {
-    ArrayList<Balls> balls;
+    ArrayList<Ball> balls;
     JToggleButton playPause;
     TGCT controller;
 
-    public CP(TGCT controller, ArrayList<Balls> balls) {
+    public CP() {
         this.balls = balls;
         this.controller = controller;
         this.playPause = new JToggleButton("Play/Pause");

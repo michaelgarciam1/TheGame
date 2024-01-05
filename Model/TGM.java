@@ -3,14 +3,15 @@ package Model;
 import java.util.ArrayList;
 
 public class TGM {
-    ArrayList<Balls> balls;
+    ArrayList<Ball> balls;
 
-    public TGM(ArrayList<Balls> balls) {
-        this.balls = balls;
+    public TGM(){
+        this.balls = new ArrayList<Ball>();
+        addBall();
     }
 
     public void addBall() {
-        Balls newBall = new Balls(0, 0, 0, 0, 0, 0, 0, false, false);
+        Ball newBall = new Ball(100,100,50,10,10);
         // el Thread se encarga de generar bolas
         Thread thread = new Thread(newBall);
         thread.start();
@@ -18,21 +19,21 @@ public class TGM {
 
     }
 
-    private void collideDetection(Balls ball) {
+    private void collideDetection(Ball ball) {
         // TODO: collideDetection
 
     }
 
-    private void lostBall(Balls ball) {
+    private void lostBall(Ball ball) {
         // TODO: lostBall
 
     }
 
-    public ArrayList<Balls> getBalls() {
+    public ArrayList<Ball> getBalls() {
         return this.balls;
     }
 
-    public void setBalls(ArrayList<Balls> balls) {
+    public void setBalls(ArrayList<Ball> balls) {
         this.balls = balls;
     }
 
