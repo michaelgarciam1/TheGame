@@ -1,21 +1,22 @@
 package View;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import Controller.TGCT;
 
 public class TGV extends JFrame implements ActionListener {
     CP controlPanel;
-    JToggleButton playPause;
+    JButton playPause;
     VW viewer;
     TGCT controller;
-    Thread viewerThread;
+    Thread viewerThread;                        
 
     public TGV(TGCT controller) {
         this.controller = controller;
@@ -91,11 +92,11 @@ public class TGV extends JFrame implements ActionListener {
         this.controlPanel = controlPanel;
     }
 
-    public JToggleButton getPlayPause() {
+    public JButton getPlayPause() {
         return this.playPause;
     }
 
-    public void setPlayPause(JToggleButton playPause) {
+    public void setPlayPause(JButton playPause) {
         this.playPause = playPause;
     }
 

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TGM {
     ArrayList<Ball> balls;
@@ -11,8 +12,9 @@ public class TGM {
     }
 
     public void addBall() {
+        Random random = new Random();
         // Se crea una nueva bola
-        Ball newBall = new Ball(3, 5, 100, 100, 15);
+        Ball newBall = new Ball(random.nextInt(0,10), random.nextInt(0,10), random.nextInt(0,100), random.nextInt(0,100), random.nextInt(0,10 ));
         // el Thread se encarga de generar bolas
         Thread thread = new Thread(newBall);
         thread.start();

@@ -1,5 +1,6 @@
 package View;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import Model.Ball;
@@ -8,10 +9,10 @@ import java.util.ArrayList;
 
 public class CP extends JPanel {
     ArrayList<Ball> balls;
-    JToggleButton playPause;
+    JButton playPause;
 
     public CP() {
-        this.playPause = new JToggleButton("Play/Pause");
+        this.playPause = new JButton("Play/Pause");
         this.setLayout(new GridBagLayout());
         addComponentsToPane();
 
@@ -33,11 +34,11 @@ public class CP extends JPanel {
 
     }
 
-    public JToggleButton getPlayPause() {
+    public JButton getPlayPause() {
         return this.playPause;
     }
 
-    public void setPlayPause(JToggleButton playPause) {
+    public void setPlayPause(JButton playPause) {
         this.playPause = playPause;
     }
 
