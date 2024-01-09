@@ -1,15 +1,18 @@
 package Controller;
 
+import Model.Ball;
 import Model.TGM;
 import View.TGV;
 
 public class TGCT {
     TGV view;
     TGM model;
+    TGPCT gamePlayController;
 
-    public TGCT() {
+    public TGCT(TGPCT gamePlayController) {
+        this.gamePlayController = gamePlayController;
         // Inicialización del modelo y la vista
-        this.model = new TGM();
+        this.model = new TGM(this);
         // A la vista se le pasa el controlador para que pueda acceder al modelo
         this.view = new TGV(this);
 
@@ -21,13 +24,8 @@ public class TGCT {
         this.model.addBall();
     }
 
-    public static void main(String[] args) {
-        TGCT controller = new TGCT();
-        // Se crean dos bolas y se inicia un hilo para cada una
-        // controller.play();
-
-        // Thread thread = new Thread(controller.getView());
-        // thread.start();
+    public void collide(Object object1, Object object2){
+        this.gamePlayController.collide(object1, object2);
     }
 
     public TGV getView() {
