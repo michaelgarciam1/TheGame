@@ -39,8 +39,7 @@ public class TGM {
         }
         for(Ball ball2 : balls){
             if(ball != ball2){
-                int distance= (int) Math.sqrt(Math.pow(ball.getPosx()-ball2.getPosx(), 2)+Math.pow(ball.getPosy()-ball2.getPosy(), 2));
-                if(distance < ball.getRadius()+ball2.getRadius()){
+               if(ball2.getPosx()==posx && ball2.getPosy()==posy){
                     gamecontroler.collide(ball, ball2);
                     return true;
                 }
