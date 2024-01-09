@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import Model.Ball;
 
 public class VW extends Canvas implements Runnable{
-
+    
     ArrayList<Ball> balls;
     private Image offscreenImage;
 
@@ -28,7 +28,7 @@ public class VW extends Canvas implements Runnable{
 
     @Override
     public void paint(Graphics g) {
-        System.out.println("dasd");
+        // System.out.println("dasd");
         if (offscreenImage == null) {
             offscreenImage = createImage(getWidth(), getHeight());
         }

@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import Controller.TGCT;
@@ -13,7 +15,7 @@ import Controller.TGCT;
 
 public class TGV extends JFrame implements ActionListener {
     CP controlPanel;
-    JToggleButton playPause;
+    JButton addBall;
     VW viewer;
     TGCT controller;
     Thread viewerThread;
@@ -23,8 +25,8 @@ public class TGV extends JFrame implements ActionListener {
         this.viewer = new VW(controller.getModel().getBalls());
         this.controlPanel = new CP();
     
-        this.playPause = this.controlPanel.getPlayPause();
-        this.playPause.addActionListener(this);
+        this.addBall = this.controlPanel.getPlayPause();
+        this.addBall.addActionListener(this);
     
         this.configureJFrame();
         this.setVisible(true);
@@ -35,12 +37,12 @@ public class TGV extends JFrame implements ActionListener {
     }
 
     private void configureJFrame() {
-        // this.setLayout(new GridBagLayout());
+        this.setLayout(new GridBagLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 500);
+        this.setSize(600, 500);
         this.setBackground(Color.blue);
-        this.add(viewer);
-        // this.addComponentsToPane(this.getContentPane());
+        // this.add(viewer);
+        this.addComponentsToPane(this.getContentPane());
     }
 
     private void addComponentsToPane(Container panel) {
@@ -56,11 +58,12 @@ public class TGV extends JFrame implements ActionListener {
         c.gridheight = 0;
         c.gridwidth = 0;
 
-        // panel.add(controlPanel, c);
+        panel.add(controlPanel, c);
         c.gridy++;
         c.gridx = 0;
 
         panel.add(viewer, c);
+        this.pack();
         // panel.validate();
         // panel.repaint();
 
@@ -70,7 +73,7 @@ public class TGV extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String str = e.getActionCommand();
         switch (str) {
-            case "Play/Pause":
+            case "Add Ball":
                 controller.play();
                 break;
             default:
@@ -86,12 +89,5 @@ public class TGV extends JFrame implements ActionListener {
         this.controlPanel = controlPanel;
     }
 
-    public JToggleButton getPlayPause() {
-        return this.playPause;
-    }
-
-    public void setPlayPause(JToggleButton playPause) {
-        this.playPause = playPause;
-    }
 
 }
