@@ -2,7 +2,6 @@ package View;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 import Model.Ball;
 import java.awt.*;
 import java.util.ArrayList;

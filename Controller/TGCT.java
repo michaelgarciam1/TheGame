@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Ball;
 import Model.TGM;
 import View.TGV;
 
