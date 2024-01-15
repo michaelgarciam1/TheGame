@@ -11,6 +11,7 @@ public class Ball implements Runnable, VO {
     private boolean isRunning = true;
     private Color color;
     TGM model;
+  
 
     public Ball(TGM model, int vx, int vy, int posx, int posy, int radius) {
         this.model = model;
@@ -25,6 +26,7 @@ public class Ball implements Runnable, VO {
 
     @Override
     public void run() {
+        
         while (isRunning) {
             if (!model.collideDetection(this)) {
                 move();
@@ -40,8 +42,10 @@ public class Ball implements Runnable, VO {
 
     }
 
-    public void stop() {
+ 
+    public void kill(){
         isRunning = false;
+        model.removeBall(this);
     }
 
     @Override
