@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import Controller.TGCT;
 
@@ -19,15 +20,16 @@ public class TGV extends JFrame implements ActionListener {
     VW viewer;
     TGCT controller;
     Thread viewerThread;
+    JTextField fps;
 
     public TGV(TGCT controller) {
         this.controller = controller;
-        this.viewer = new VW(controller.getModel().getBalls());
+        this.viewer = new VW(controller.getModel().getBalls(),this);
         this.controlPanel = new CP();
     
         this.addBall = this.controlPanel.getPlayPause();
         this.addBall.addActionListener(this);
-    
+        this.fps = this.controlPanel.getFps();
         this.configureJFrame();
         this.setVisible(true);
 
@@ -88,6 +90,8 @@ public class TGV extends JFrame implements ActionListener {
     public void setControlPanel(CP controlPanel) {
         this.controlPanel = controlPanel;
     }
-
+    public void setFpsText(String text){
+        this.fps.setText(text);
+    }
 
 }

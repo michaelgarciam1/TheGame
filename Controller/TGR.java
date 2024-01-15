@@ -25,6 +25,7 @@ public class TGR {
     }
 
     private void ballCollide(Ball b1,Ball b2){
-        
+        b1.kill();
+        b2.kill();
     }
 }

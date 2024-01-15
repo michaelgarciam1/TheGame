@@ -28,11 +28,11 @@ public class Ball implements Runnable, VO {
 
     public Ball(TGM model) {
         this.model= model;
-        this.vx = ran.nextInt(10);
-        this.vy = ran.nextInt(10);
-        this.posx = ran.nextInt(200);
-        this.posy = ran.nextInt(200);
-        this.radius = ran.nextInt(20);
+        this.vx = ran.nextInt(1,10);
+        this.vy = ran.nextInt(1,10);
+        this.posx = ran.nextInt(500);
+        this.posy = ran.nextInt(500);
+        this.radius = ran.nextInt(10,20);
         this.color = new Color(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255));
     }
 
@@ -51,11 +51,11 @@ public class Ball implements Runnable, VO {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public void stop() {
-        isRunning = false;
+    public void kill() {
+        this.isRunning = false;
+        model.removeBall(this);
     }
 
     @Override

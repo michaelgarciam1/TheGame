@@ -6,21 +6,26 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.List;
 import java.util.ArrayList;
 import Model.Ball;
 
-public class VW extends Canvas implements Runnable{
-    
-    ArrayList<Ball> balls;
+public class VW extends Canvas implements Runnable {
+
+    private List<Ball> balls;
     private Image offscreenImage;
+    TGV tgv;
+    private int fps;
+    private long lastTime;
 
-
-    public VW(ArrayList<Ball> balls) {
+    public VW(List<Ball> balls, TGV tgv) {
+        this.tgv = tgv;
         this.balls = balls;
         Dimension d = new Dimension(500, 500);
         this.setPreferredSize(d);
-   
+        lastTime = System.nanoTime();
     }
+
     @Override
     public void update(Graphics g) {
         paint(g);
@@ -28,7 +33,6 @@ public class VW extends Canvas implements Runnable{
 
     @Override
     public void paint(Graphics g) {
-        // System.out.println("dasd");
         if (offscreenImage == null) {
             offscreenImage = createImage(getWidth(), getHeight());
         }
@@ -39,27 +43,28 @@ public class VW extends Canvas implements Runnable{
             bola.paint(g2d);
         }
         g.drawImage(offscreenImage, 0, 0, this);
+
     }
+
     public void clear(Graphics2D g) {
-    
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
     }
 
-
-    public ArrayList<Ball> getBalls() {
-        return this.balls;
+ 
+    private void calculateFPS() {
+        long currentTime = System.nanoTime();
+        long nanoElapsedTime = currentTime - lastTime;
+        long elapsedTime = nanoElapsedTime / 1000000;
+        fps = (int) (1000 / elapsedTime);
+        lastTime = currentTime;
+        tgv.fps.setText("FPS: " + fps);
     }
-
-    public void setBalls(ArrayList<Ball> balls) {
-        this.balls = balls;
-    }
-
     @Override
     public void run() {
         while (true) {
-            // System.out.println("repintando");
             repaint();
+            calculateFPS();
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

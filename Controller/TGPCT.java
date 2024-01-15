@@ -4,8 +4,9 @@ public class TGPCT {
 
     TGR rules;
     public TGPCT() {
-        TGCT game = new TGCT(this);
         rules= new TGR();
+        TGCT game = new TGCT(this);
+        
     }
 
     public static void main(String[] args) {
