@@ -6,10 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Random;
 
 
-public class Ball implements Runnable, VO {
+public class Ball implements Runnable, VO,Serializable {
     private int vx, vy;
     private int posx, posy, radius;
     private boolean isRunning = true;

@@ -12,7 +12,7 @@ public class TGM {
 
     public TGM(TGCT gamecontroler) {
         this.gamecontroler = gamecontroler;
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 3; i++) {
 
             this.addBall();
         }
