@@ -41,4 +41,12 @@ public class TGCT {
         controler.collide(o1, o2);
     }
 
+    public void addBall(Ball ball) {
+        this.model.addBall(ball);
+    }
+
+    public void removeBall(Ball ball) {
+        this.model.removeBall(ball);
+    }
+
 }

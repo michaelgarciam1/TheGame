@@ -1,23 +1,26 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 import Controller.TGCT;
 
 public class TGM {
-    private List<Ball> balls = new CopyOnWriteArrayList<>();
+    private ArrayList<Ball> balls ;
     TGCT gamecontroler;
 
     public TGM(TGCT gamecontroler) {
         this.gamecontroler = gamecontroler;
-        for (int i = 0; i < 3; i++) {
-
-            this.addBall();
-        }
+        this.balls = new ArrayList<>();
+        addBall();
     }
 
+    public void addBall(Ball ball) {
+        ball.setModel(this);
+        this.balls.add(ball);
+        Thread thread = new Thread(ball);
+        thread.start();
+    }
     public void addBall() {
         Ball newBall = new Ball(this);
         // el Thread se encarga de generar bolas
@@ -30,8 +33,12 @@ public class TGM {
         int posx = ball.getPosx() + ball.getVx();
         int posy = ball.getPosy() + ball.getVy();
 
-        if (posx < 0 || posx > 500) {
-            gamecontroler.collide(ball, "x");
+        if ( posx > 500) {
+            gamecontroler.collide(ball, "x+");
+            return true;
+        }
+        if (posx < 0) {
+            gamecontroler.collide(ball, "x-");
             return true;
         }
 
@@ -61,7 +68,7 @@ public class TGM {
         this.balls.remove(ball);
     }
 
-    public List<Ball> getBalls() {
+    public ArrayList<Ball> getBalls() {
         return this.balls;
     }
 

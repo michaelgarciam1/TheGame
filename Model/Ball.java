@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -23,8 +21,19 @@ public class Ball implements Runnable, VO,Serializable {
         this.vy = vy;
         this.posx = posx;
         this.posy = posy;
-        this.radius = radius;
-        
+        this.radius = radius;   
+    }
+
+    public Ball() {
+    }
+
+    public Ball(Ball ball){
+        this.vx = ball.getVx();
+        this.vy = ball.getVy();
+        this.posx = ball.getPosx();
+        this.posy = ball.getPosy();
+        this.radius = ball.getRadius();
+        this.color = ball.getColor();
     }
 
     public Ball(TGM model) {
@@ -150,5 +159,5 @@ public class Ball implements Runnable, VO,Serializable {
     public void setModel(TGM model) {
         this.model = model;
     }
-   
+    
 }

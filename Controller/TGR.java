@@ -3,8 +3,10 @@ package Controller;
 import Model.Ball;
 
 public class TGR {
+    TGPCT controler;
 
-    public TGR() {
+    public TGR(TGPCT controler) {
+        this.controler = controler;
     }
 
     public void collide(Object o1, Object o2) {
@@ -17,14 +19,19 @@ public class TGR {
     }
 
     private void wallCollide(Ball ball, String wall) {
-        if (wall.equals("x")) {
-            ball.setVx(-ball.getVx());
-        } else {
+        if (wall.equals("y")) {
             ball.setVy(-ball.getVy());
         }
+        if (wall.equals("x+")) {
+            controler.enviarDerecha(ball);
+        }
+        if (wall.equals("x-")) {
+            controler.enviarIzquierda(ball);
+        }
+
     }
 
-    private void ballCollide(Ball b1,Ball b2){
+    private void ballCollide(Ball b1, Ball b2) {
         b1.kill();
         b2.kill();
     }

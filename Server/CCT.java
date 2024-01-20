@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import Model.Ball;
+import Controller.TGPCT;
 
 /*
 Clase de conexión, se encarga de la comunicación entre el cliente y el servidor.
@@ -14,11 +15,16 @@ public class CCT {
     ArrayList<CH> channels;
     private SC serverConnector;
     private CC clientConnector;
+    private TGPCT controller;
 
-    public CCT(String ip) {
+    public CCT(String ip, TGPCT controller) {
+        this.controller = controller;
         channels = new ArrayList<CH>();
         Socket sc = createConnection(ip);
-        channels.add(new CH(this, sc));
+        CH chanel = new CH(this, sc);
+        channels.add(chanel);
+        new Thread(chanel).start();
+        controller.isConnected = true;
     }
 
     private Socket createConnection(String ip) {
@@ -90,14 +96,15 @@ public class CCT {
             chanel.setObjectInputStream(null);
             chanel.setObjectOutputStream(null);
         }
-
     }
 
     public void enviarBall(Ball ball) {
-
+        channels.get(0).sendBall(ball);
     }
 
     public void recibirBall(Ball ball) {
-
+        System.out.println("Recibiendo bola");
+        System.out.println(ball);
+        controller.ballRecieved(ball);
     }
 }
