@@ -24,6 +24,7 @@ public class VW extends Canvas implements Runnable {
         Dimension d = new Dimension(500, 500);
         this.setPreferredSize(d);
         lastTime = System.nanoTime();
+        
     }
 
     @Override

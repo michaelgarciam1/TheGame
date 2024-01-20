@@ -21,12 +21,19 @@ public class TGR {
     private void wallCollide(Ball ball, String wall) {
         if (wall.equals("y")) {
             ball.setVy(-ball.getVy());
+            return;
         }
         if (wall.equals("x+")) {
+            System.out.println("ball derecha"+ ball.getPosx());
+            
             controler.enviarDerecha(ball);
+            return;
         }
         if (wall.equals("x-")) {
+            System.out.println("ball izquierdqa"+ ball.getPosx());
+            
             controler.enviarIzquierda(ball);
+            return;
         }
 
     }

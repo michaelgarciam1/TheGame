@@ -38,8 +38,8 @@ public class Ball implements Runnable, VO,Serializable {
 
     public Ball(TGM model) {
         this.model= model;
-        this.vx = ran.nextInt(1,10);
-        this.vy = ran.nextInt(1,10);
+        this.vx = ran.nextInt(1,3);
+        this.vy = ran.nextInt(1,3);
         this.posx = ran.nextInt(500);
         this.posy = ran.nextInt(500);
         this.radius = ran.nextInt(10,20);

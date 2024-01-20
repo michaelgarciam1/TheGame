@@ -5,7 +5,7 @@ import Model.*;
 
 public class TGPCT {
 
-    private boolean derecha = true;
+    public boolean derecha = false;
     public boolean isConnected = false;
     private CCT conexiones;
     private TGCT game;
@@ -27,26 +27,35 @@ public class TGPCT {
     }
 
     public void enviarDerecha(Ball ball) {
-        if (isConnected && !derecha) {
+        System.out.println("enviando derecha"+ derecha+", " +isConnected);
+        if (isConnected && derecha) {
+
+            ball.setVx(-ball.getVx());
+        } else {
+            // System.out.println("enviando derecha"+ derecha+", " +ball.getPosx());
+            ball.setPosx(1);
             ball.kill();
             conexiones.enviarBall(ball);
-           
-        } else {
-            ball.setVx(-ball.getVx());
         }
     }
 
     public void enviarIzquierda(Ball ball) {
-        if (isConnected && derecha) {
+        if (isConnected && !derecha) {
+            ball.setVx(-ball.getVx());
+        } else {
+            // System.out.println("enviando izquierda"+ derecha+", " +ball.getPosx());
+            ball.setPosx(499);
             ball.kill();
             conexiones.enviarBall(ball);
-        } else {
-            ball.setVx(-ball.getVx());
         }
     }
 
     public void ballRecieved(Ball ball) {
         game.addBall(ball);
+    }
+
+    public boolean isDerecha() {
+        return this.derecha;
     }
 
 }

@@ -103,8 +103,8 @@ public class CCT {
     }
 
     public void recibirBall(Ball ball) {
-        System.out.println("Recibiendo bola");
-        System.out.println(ball);
+        // System.out.println("Recibiendo bola");
+        // System.out.println(ball);
         controller.ballRecieved(ball);
     }
 }

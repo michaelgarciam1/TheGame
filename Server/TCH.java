@@ -22,7 +22,7 @@ public class TCH implements Runnable {
 
     public void run() {
         while(estaEncendido) {
-            System.out.println("Health Care: Checking...");
+            // System.out.println("Health Care: Checking...");
             // Verificar si ha pasado más tiempo que timeOut desde que se recibió el último mensaje
             long currentTime = System.currentTimeMillis();
             long timeLastMessage = connection.getTimeReceivedMessage();

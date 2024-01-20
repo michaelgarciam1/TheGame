@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 public class CP extends JPanel {
     JTextField fps;
+    JTextField lado;
     JButton addBall;
-  
+    
 
     public CP() {
         this.addBall = new JButton("Add Ball");
@@ -38,7 +39,9 @@ public class CP extends JPanel {
         this.fps.setEditable(false);
         this.add(this.fps, c);
 
-
+        lado= new JTextField("");
+        c.gridx++;
+        this.add(lado,c);
     }
 
     public JButton getPlayPause() {
@@ -50,5 +53,9 @@ public class CP extends JPanel {
     }
     public JTextField getFps() {
         return this.fps;
+    }
+
+    public JTextField getLado() {
+        return this.lado;
     }
 }

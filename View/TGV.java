@@ -35,6 +35,8 @@ public class TGV extends JFrame implements ActionListener {
 
         this.viewerThread = new Thread(this.viewer);
         this.viewerThread.start();
+        String lado =(controller.getControler().derecha)?"Derecha":"Izquierda";
+        this.controlPanel.getLado().setText( lado);
 
     }
 

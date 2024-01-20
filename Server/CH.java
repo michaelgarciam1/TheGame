@@ -41,7 +41,7 @@ public class CH implements Runnable {
     public void sendBall(Ball ball) {
         try {
             Balldata ballData = new Balldata(ball);
-            System.out.println("enviando bola"+ ballData);
+            // System.out.println("enviando bola"+ ballData);
             out.writeObject(ballData);
             out.flush(); 
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class CH implements Runnable {
     
     public void recieveBall() {
         Object object;
-        System.out.println("Esperando mensaje...");
+        // System.out.println("Esperando mensaje...");
         try {
             while (socket != null && socket.isConnected() && (object = in.readObject()) != null) {
                 System.out.println("Recibido ping");
@@ -62,7 +62,7 @@ public class CH implements Runnable {
                     recieveBall();
                     return;
                 }
-                System.out.println("Recibido bolas");
+                // System.out.println("Recibido bolas");
                 Balldata m = (Balldata) object;
                 controller.recibirBall(m.transformData());
                 long time = (System.currentTimeMillis());
@@ -86,7 +86,7 @@ public class CH implements Runnable {
 
     public boolean ping() {
         try {
-            System.out.println("entra en ping");
+            // System.out.println("entra en ping");
             out.writeObject(new String("ping"));
             return true;
         } catch (Exception e) {

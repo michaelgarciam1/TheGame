@@ -49,4 +49,14 @@ public class TGCT {
         this.model.removeBall(ball);
     }
 
+
+    public TGPCT getControler() {
+        return this.controler;
+    }
+
+    public void setControler(TGPCT controler) {
+        this.controler = controler;
+    }
+
+
 }

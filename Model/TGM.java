@@ -12,7 +12,7 @@ public class TGM {
     public TGM(TGCT gamecontroler) {
         this.gamecontroler = gamecontroler;
         this.balls = new ArrayList<>();
-        addBall();
+        // addBall();
     }
 
     public void addBall(Ball ball) {
@@ -33,7 +33,7 @@ public class TGM {
         int posx = ball.getPosx() + ball.getVx();
         int posy = ball.getPosy() + ball.getVy();
 
-        if ( posx > 500) {
+        if (posx > 500) {
             gamecontroler.collide(ball, "x+");
             return true;
         }
