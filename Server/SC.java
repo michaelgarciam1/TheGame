@@ -7,27 +7,27 @@ import java.net.Socket;
 
 public class SC implements Runnable{
     private int PORT;
-    private ServerSocket SOCKET;
-    private Socket clsock;
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
 
     public SC(int port) {
         this.PORT = port;
         try {
-            this.SOCKET = new ServerSocket(PORT);
+            this.serverSocket = new ServerSocket(PORT);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public Socket getClsock() {
-        return clsock;
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
     @Override
     public void run() {
         try {
             System.out.println("Conectando como servidor...");
-            this.clsock = SOCKET.accept();
+            this.clientSocket = serverSocket.accept();
         } catch (Exception e) {
             System.out.println("ServerConnector error: " + e);
         }
@@ -35,12 +35,12 @@ public class SC implements Runnable{
 
     public void killSocket(){
         try{
-            SOCKET.close();
+            serverSocket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public boolean isSocketClosed(){
-        return SOCKET.isClosed();
+        return serverSocket.isClosed();
     }
 }

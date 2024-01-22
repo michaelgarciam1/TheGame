@@ -2,37 +2,52 @@ package Server;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketImpl;
 import java.util.ArrayList;
 
 import Model.Ball;
 import Controller.TGPCT;
+import Data.*;
+import Data.PeerLocation;
+import Interlocutor.Peer;
 
 /*
 Clase de conexión, se encarga de la comunicación entre el cliente y el servidor.
 */
 public class CCT {
-
     ArrayList<CH> channels;
-    private SC serverConnector;
-    private CC clientConnector;
     private TGPCT controller;
 
-    public CCT(String ip, TGPCT controller) {
+    public CCT(String ip, TGPCT controller, ArrayList<Peer> configurations) {
         this.controller = controller;
         channels = new ArrayList<CH>();
-        Socket sc = createConnection(ip);
-        CH chanel = new CH(this, sc);
-        channels.add(chanel);
-        new Thread(chanel).start();
-        controller.isConnected = true;
+        loadConfiguration(configurations);
+    }
+    private void loadConfiguration(ArrayList<Peer> configurations) {
+        for (Peer peer : configurations) {
+            Socket sc = createConnection(peer.getIp(), peer.getPort());
+            CH chanel = new CH(this, sc, peer);
+            channels.add(chanel);
+            new Thread(chanel).start();
+        }
+    }
+    public boolean canSend(Ball ball, PeerLocation location){
+        for(CH channel: channels){
+            if(channel.getPeer().getLocation() == location){
+                return true;
+            }
+        }
+        return false;
+
     }
 
-    private Socket createConnection(String ip) {
-        int PORT = 1234;
+
+    private Socket createConnection(String ip, int port) {
+        SC serverConnector;
+        CC clientConnector;
         try {
             boolean seHaPodidoConectarComoCliente;
-
-            this.clientConnector = new CC(PORT, ip);
+            clientConnector = new CC(port, ip);
             clientConnector.setIntentarReconectar(false);
             clientConnector.run();
             Socket socket = clientConnector.getSOCKET();
@@ -42,64 +57,34 @@ public class CCT {
             } else {
                 clientConnector.setIntentarReconectar(true);
                 System.out.println("Abortando conexion como cliente...");
+               
                 // Iniciar el servidor
-                this.serverConnector = new SC(PORT);
+                serverConnector = new SC(port);
                 serverConnector.run();
-                socket = serverConnector.getClsock();
+                socket = serverConnector.getClientSocket();
                 System.out.println("Conexion establecida como servidor correctamente");
             }
             System.out.println(socket);
             return socket;
-
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return null;
         }
     }
 
-    // public void reconnect(CH chanel) {
+    public void reconnect(CH chanel) {
+        Socket socket = createConnection(chanel.getIp(), chanel.getPort());
+        chanel.initChanel(socket);
         
-    //     try {
-    //         int PORT = 1234;
-    //         // Iniciar servidor y esperar conexiones entrantes
-    //         System.out.println("Iniciando servidor...");
-    //         serverConnector = new SC(PORT);
-    //         serverConnector.run();
-    //         Socket socket = serverConnector.getClsock();
-    //         System.out.println("Conexion establecida como servidor correctamente");
-          
-
-    //         // Reinicializar los objetos BufferedReader y PrintWriter
-    //         this.in = new ObjectInputStream(socket.getInputStream());
-    //         this.out = new ObjectOutputStream(socket.getOutputStream());
-    //     } catch (IOException ex) {
-    //         System.err.println("No se ha podido conectar");
-    //     } catch (NullPointerException e) {
-    //         System.out.println("Error en la conexión: " + e);
-    //     }
-    // }
-
-    public synchronized void killSocket(CH chanel) {
-        try {
-            chanel.stopHCC();
-            if (serverConnector != null) {
-                chanel.getSocket().close();
-                if (!serverConnector.isSocketClosed()) {
-                    serverConnector.killSocket();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            chanel.setSocket(null);
-            System.err.println("Matando el socket...");
-            chanel.setObjectInputStream(null);
-            chanel.setObjectOutputStream(null);
-        }
     }
 
-    public void enviarBall(Ball ball) {
-        channels.get(0).sendBall(ball);
+   
+    public void enviarBall(Ball ball, PeerLocation location) {
+       for(CH channel: channels){
+           if(channel.getPeer().getLocation() == location){
+               channel.sendBall(ball);
+           }
+       }
     }
 
     public void recibirBall(Ball ball) {

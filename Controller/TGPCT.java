@@ -1,21 +1,30 @@
 package Controller;
 
 import Server.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import Data.PeerLocation;
+import Interlocutor.Peer;
 import Model.*;
 
 public class TGPCT {
 
-    public boolean derecha = false;
-    public boolean isConnected = false;
     private CCT conexiones;
     private TGCT game;
-
+    private String filename = "my.ini";
+    private ArrayList<Peer> peers = new ArrayList<>();
     TGR rules;
 
     public TGPCT() {
         rules = new TGR(this);
         game = new TGCT(this);
-        conexiones = new CCT("localhost", this);
+        loadConfiguration(filename);
+        conexiones = new CCT("localhost", this, peers);
+
     }
 
     public static void main(String[] args) {
@@ -27,26 +36,25 @@ public class TGPCT {
     }
 
     public void enviarDerecha(Ball ball) {
-        System.out.println("enviando derecha"+ derecha+", " +isConnected);
-        if (isConnected && derecha) {
-
-            ball.setVx(-ball.getVx());
-        } else {
-            // System.out.println("enviando derecha"+ derecha+", " +ball.getPosx());
+        if (conexiones.canSend(ball, PeerLocation.EAST)) {
             ball.setPosx(1);
             ball.kill();
-            conexiones.enviarBall(ball);
+            conexiones.enviarBall(ball, PeerLocation.EAST);
+        } else {
+            System.err.println("tiene que rebotar");
+            ball.setVx(-ball.getVx());
+           
         }
     }
 
     public void enviarIzquierda(Ball ball) {
-        if (isConnected && !derecha) {
-            ball.setVx(-ball.getVx());
-        } else {
-            // System.out.println("enviando izquierda"+ derecha+", " +ball.getPosx());
+        if (conexiones.canSend(ball, PeerLocation.WEST)) {
             ball.setPosx(499);
             ball.kill();
-            conexiones.enviarBall(ball);
+            conexiones.enviarBall(ball, PeerLocation.WEST);
+        } else {
+            ball.setVx(-ball.getVx()); 
+
         }
     }
 
@@ -54,8 +62,30 @@ public class TGPCT {
         game.addBall(ball);
     }
 
-    public boolean isDerecha() {
-        return this.derecha;
+    public void loadConfiguration(String fileName) {
+        File archivo = new File(fileName);
+        try {
+            Scanner scanner = new Scanner(archivo);
+
+            while (scanner.hasNextLine()) {
+
+                String linea = scanner.nextLine();
+
+                String[] partes = linea.split(",");
+
+                String primerString = partes[0];
+                int segundoInt = Integer.parseInt(partes[1]);
+                String tercerString = partes[2];
+
+                peers.add(new Peer(primerString, segundoInt, PeerLocation.valueOf(tercerString)));
+
+            }
+
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
+    
 }
