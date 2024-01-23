@@ -23,17 +23,22 @@ public class CCT {
         channels = new ArrayList<CH>();
         loadConfiguration(configurations);
     }
+
     private void loadConfiguration(ArrayList<Peer> configurations) {
         for (Peer peer : configurations) {
-            Socket sc = createConnection(peer.getIp(), peer.getPort());
-            CH chanel = new CH(this, sc, peer);
-            channels.add(chanel);
-            new Thread(chanel).start();
+            Thread threadHilo = new Thread(() -> {
+                Socket sc = createConnection(peer.getIp(), peer.getPort());
+                CH chanel = new CH(this, sc, peer);
+                channels.add(chanel);
+                new Thread(chanel).start();
+            });
+            threadHilo.start();
         }
     }
-    public boolean canSend(Ball ball, PeerLocation location){
-        for(CH channel: channels){
-            if(channel.getPeer().getLocation() == location){
+
+    public boolean canSend(Ball ball, PeerLocation location) {
+        for (CH channel : channels) {
+            if (channel.getPeer().getLocation() == location) {
                 return true;
             }
         }
@@ -41,8 +46,15 @@ public class CCT {
 
     }
 
+    public Socket createConnection(String ip, int port) {
+        Socket sc = null;
+        while (sc == null) {
+            sc = createCon(ip, port);
+        }
+        return sc;
+    }
 
-    private Socket createConnection(String ip, int port) {
+    private Socket createCon(String ip, int port) {
         SC serverConnector;
         CC clientConnector;
         try {
@@ -57,7 +69,7 @@ public class CCT {
             } else {
                 clientConnector.setIntentarReconectar(true);
                 System.out.println("Abortando conexion como cliente...");
-               
+
                 // Iniciar el servidor
                 serverConnector = new SC(port);
                 serverConnector.run();
@@ -75,16 +87,15 @@ public class CCT {
     public void reconnect(CH chanel) {
         Socket socket = createConnection(chanel.getIp(), chanel.getPort());
         chanel.initChanel(socket);
-        
+
     }
 
-   
     public void enviarBall(Ball ball, PeerLocation location) {
-       for(CH channel: channels){
-           if(channel.getPeer().getLocation() == location){
-               channel.sendBall(ball);
-           }
-       }
+        for (CH channel : channels) {
+            if (channel.getPeer().getLocation() == location) {
+                channel.sendBall(ball);
+            }
+        }
     }
 
     public void recibirBall(Ball ball) {

@@ -42,8 +42,7 @@ public class TGPCT {
             conexiones.enviarBall(ball, PeerLocation.EAST);
         } else {
             System.err.println("tiene que rebotar");
-            ball.setVx(-ball.getVx());
-           
+            ball.setVx(-ball.getVx());           
         }
     }
 
@@ -54,7 +53,6 @@ public class TGPCT {
             conexiones.enviarBall(ball, PeerLocation.WEST);
         } else {
             ball.setVx(-ball.getVx()); 
-
         }
     }
 
