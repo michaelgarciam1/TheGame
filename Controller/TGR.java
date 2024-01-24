@@ -1,5 +1,7 @@
 package Controller;
 
+import Data.PeerLocation;
+import Interlocutor.Peer;
 import Model.Ball;
 
 public class TGR {
@@ -11,34 +13,34 @@ public class TGR {
 
     public void collide(Object o1, Object o2) {
         if (o1 instanceof Ball && o2 instanceof String) {
-            wallCollide((Ball) o1, (String) o2);
+            collide((Ball) o1, (String) o2);
         }
         if (o1 instanceof Ball && o2 instanceof Ball) {
-            ballCollide((Ball) o1, (Ball) o2);
+            collide((Ball) o1, (Ball) o2);
         }
     }
 
-    private void wallCollide(Ball ball, String wall) {
-        if (wall.equals("y")) {
-            ball.setVy(-ball.getVy());
+    private void collide(Ball ball, String wall) {
+        if (wall.equals("y+")) {
+           controler.enviarBola(ball,PeerLocation.NORTH);
+            return;
+        }
+        if (wall.equals("y-")) {
+            controler.enviarBola(ball,PeerLocation.SOUTH);
             return;
         }
         if (wall.equals("x+")) {
-            System.out.println("ball derecha"+ ball.getPosx());
-            
-            controler.enviarDerecha(ball);
+            controler.enviarBola(ball,PeerLocation.EAST);
             return;
         }
         if (wall.equals("x-")) {
-            System.out.println("ball izquierdqa"+ ball.getPosx());
-            
-            controler.enviarIzquierda(ball);
+            controler.enviarBola(ball,PeerLocation.WEST);
             return;
         }
 
     }
 
-    private void ballCollide(Ball b1, Ball b2) {
+    private void collide(Ball b1, Ball b2) {
         b1.kill();
         b2.kill();
     }

@@ -42,8 +42,12 @@ public class TGM {
             return true;
         }
 
-        if (posy < 0 || posy > 500) {
-            gamecontroler.collide(ball, "y");
+        if (posy > 500) {
+            gamecontroler.collide(ball, "y+");
+            return true;
+        }
+        if (posy < 0) {
+            gamecontroler.collide(ball, "y-");
             return true;
         }
         // for (Ball ball2 : balls) {
