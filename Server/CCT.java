@@ -1,13 +1,9 @@
 package Server;
 
-import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketImpl;
 import java.util.ArrayList;
-
 import Model.Ball;
 import Controller.TGPCT;
-import Data.*;
 import Data.PeerLocation;
 import Interlocutor.Peer;
 
@@ -29,16 +25,18 @@ public class CCT {
             Thread threadHilo = new Thread(() -> {
                 Socket sc = createConnection(peer.getIp(), peer.getPort());
                 CH chanel = new CH(this, sc, peer);
+                chanel.setConnected(true);
                 channels.add(chanel);
                 new Thread(chanel).start();
             });
             threadHilo.start();
+
         }
     }
 
     public boolean canSend(Ball ball, PeerLocation location) {
         for (CH channel : channels) {
-            if (channel.getPeer().getLocation() == location) {
+            if (channel.getPeer().getLocation() == location && channel.isConnected()) {
                 return true;
             }
         }
@@ -85,9 +83,14 @@ public class CCT {
     }
 
     public void reconnect(CH chanel) {
-        Socket socket = createConnection(chanel.getIp(), chanel.getPort());
-        chanel.initChanel(socket);
-
+        chanel.setConnected(false);
+        Thread threadHilo = new Thread(() -> {
+            Socket sc = createConnection(chanel.getPeer().getIp(), chanel.getPeer().getPort());
+            chanel.initChanel(sc);
+            chanel.setConnected(true);
+            new Thread(chanel).start();
+        });
+        chanel.setConnected(true);
     }
 
     public void enviarBall(Ball ball, PeerLocation location) {

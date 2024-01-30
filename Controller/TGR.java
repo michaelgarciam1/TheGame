@@ -1,7 +1,6 @@
 package Controller;
 
 import Data.PeerLocation;
-import Interlocutor.Peer;
 import Model.Ball;
 
 public class TGR {

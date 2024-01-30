@@ -22,9 +22,10 @@ public class CH implements Runnable {
     private String ip;
     private int port;
     private Peer peer;
-    
+    private boolean connected;
 
     public CH(CCT controller,Socket socket, Peer peer ) {
+        this.connected=false;
         this.peer = peer;
         this.controller = controller;
         TCH healthCareConnection = new TCH(this, 10000);
@@ -216,6 +217,12 @@ public class CH implements Runnable {
 
     public void setPort(int port) {
         this.port = port;
+    }
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+    public boolean isConnected() {
+        return this.connected;
     }
 
 
