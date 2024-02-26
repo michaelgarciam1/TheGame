@@ -1,51 +1,44 @@
 package Server;
+
 import java.net.Socket;
 
 /*Conector para actuar como cliente*/
 
-public class CC implements Runnable{
-    private Socket SOCKET;
-    private int PORT;
-    private String ADDRESS;
+public class CC implements Runnable {
+    private CCT controller;
 
-    private boolean conexionEstablecida = false;
+    public CC(CCT controller) {
+        this.controller = controller;
 
-    private volatile boolean intentarReconectar = true;
-    public CC(int port, String address) {
-        this.PORT = port;
-        this.ADDRESS = address;
     }
+
     @Override
     public void run() {
-        try {
-            System.out.println("Conectando como cliente...");
-            while (this.SOCKET == null) {
-                this.SOCKET = new Socket(this.ADDRESS, this.PORT);
-            }
-            conexionEstablecida = true;
-        } catch (Exception e) {
-            System.out.println("Esperando conexión...");
+        while (true) {
+            
             try {
-                Thread.sleep(5000);
-                if (intentarReconectar) {
-                    run();
-                }
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
+                Thread.sleep(10000);
+                createConnection();
+            } catch (Exception e) {
+                System.out.println("conectando");
             }
         }
-
     }
 
-    public Socket getSOCKET() {
-        return SOCKET;
+    private void createConnection() {
+        for (CH channel : this.controller.getChannels()) {
+            if (!channel.isConnected()) {
+                try {
+                    Socket socket = new Socket(channel.getPeer().getIp(), channel.getPeer().getPort());
+                    System.out.println("Conectado a: " + channel.getPeer().getIp()+ channel.getPeer().getPort());
+                    System.out.println("Conectado a CC: " + socket);
+                    controller.addSocket(socket, channel,false);
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Error en el CC: " + e);
+                }
+            }
+        }
     }
 
-    public boolean isConexionEstablecida() {
-        return conexionEstablecida;
-    }
-
-    public void setIntentarReconectar(boolean intentarReconectar) {
-        this.intentarReconectar = intentarReconectar;
-    }
 }

@@ -9,13 +9,15 @@ public class SC implements Runnable{
     private int PORT;
     private ServerSocket serverSocket;
     private Socket clientSocket;
+    private CCT controller;
 
-    public SC(int port) {
+    public SC(CCT controller,int port) {
+        this.controller = controller;
         this.PORT = port;
         try {
-            this.serverSocket = new ServerSocket(PORT);
-        } catch (Exception e) {
-            System.out.println(e);
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -26,8 +28,8 @@ public class SC implements Runnable{
     @Override
     public void run() {
         try {
-            System.out.println("Conectando como servidor...");
             this.clientSocket = serverSocket.accept();
+            controller.addChannelServer(clientSocket);
         } catch (Exception e) {
             System.out.println("ServerConnector error: " + e);
         }

@@ -23,20 +23,20 @@ public class TGPCT {
         rules = new TGR(this);
         game = new TGCT(this);
         loadConfiguration(filename);
-        conexiones = new CCT("localhost", this, peers);
+        conexiones = new CCT(this, peers,1234);
 
     }
 
     public static void main(String[] args) {
         TGPCT game = new TGPCT();
     }
-
+    
     public void collide(Object o1, Object o2) {
         rules.collide(o1, o2);
     }
 
     public void enviarBola(Ball ball, PeerLocation location) {
-        if (conexiones.canSend(ball, location)) {
+        if (conexiones.canSend(location)) {
             ball.kill();
             changePosition(ball, location);
             conexiones.enviarBall(ball, location);
@@ -73,7 +73,7 @@ public class TGPCT {
     }
 
     public void enviarDerecha(Ball ball) {
-        if (conexiones.canSend(ball, PeerLocation.EAST)) {
+        if (conexiones.canSend(PeerLocation.EAST)) {
             ball.setPosx(1);
             ball.kill();
             conexiones.enviarBall(ball, PeerLocation.EAST);
@@ -84,7 +84,7 @@ public class TGPCT {
     }
 
     public void enviarIzquierda(Ball ball) {
-        if (conexiones.canSend(ball, PeerLocation.WEST)) {
+        if (conexiones.canSend( PeerLocation.WEST)) {
             ball.setPosx(499);
             ball.kill();
             conexiones.enviarBall(ball, PeerLocation.WEST);
